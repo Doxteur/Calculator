@@ -38,11 +38,11 @@ function Calculator() {
     setOperator(null);
     setWaitingForSecondOperand(false);
   };
-  
+
   const clearLastHistoryItem = () => {
     setHistory((prevHistory) => prevHistory.slice(0, prevHistory.length - 1));
   };
-  
+
   const handleClear = (btnValue) => {
     if (btnValue === "C") {
       clearDisplay();
@@ -68,7 +68,7 @@ function Calculator() {
     setWaitingForSecondOperand(true);
     setOperator(nextOperator);
 
-   
+
   };
 
   const calculate = (firstOperand, secondOperand, operator) => {
@@ -84,6 +84,17 @@ function Calculator() {
       default:
         return secondOperand;
     }
+  };
+  
+  const exportToCSV = () => {
+    const csvContent = "data:text/csv;charset=utf-8," + history.join("\n");
+    const encodedURI = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedURI);
+    link.setAttribute("download", "calculator_history.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -145,15 +156,22 @@ function Calculator() {
             );
           })}
         </div>
+        <div>
+          <h2>History</h2>
+          <ul>
+            {history.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div onClick={exportToCSV} >
+          <h2 className="bg-green-400 rounded-lg text-center font-bold cursor-pointer">Export CSV</h2>
+            </div>
+        </div>
       </div>
-      <div>
-        <h2>History</h2>
-        <ul>
-          {history.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
-      </div>
+
+
     </div>
   );
 }
