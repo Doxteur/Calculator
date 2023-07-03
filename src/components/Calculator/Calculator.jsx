@@ -21,8 +21,6 @@ function Calculator() {
     console.log(calc);
   }, [calc]);
 
-  const removeSpaces = (num) => num.toString().replace(/\s/g, "");
-
   return (
     <div>
       <div className="min-w-screen min-h-screen bg-gray-100 flex items-center justify-center px-5 py-5">
@@ -43,7 +41,7 @@ function Calculator() {
                   {btn.map((btnCut) => {
                     return (
                       <div className={` border-r border-b border-indigo-400 
-                      ${btnCut == "=" ? 'w-2/4' : 'w-1/4'}`}
+                      ${btnCut === "=" ? 'w-2/4' : 'w-1/4'}`}
                         key={btnCut}>
                         <Button 
                           value={btnCut}
@@ -57,7 +55,7 @@ function Calculator() {
                               ? percentClickHandler(calc,setCalc)
                               : btnCut === "="
                               ? equalsClickHandler(calc,setCalc)
-                              : btnCut == "/" || btnCut == "X" || btnCut == "-" || btnCut == "+"
+                              : btnCut === "/" || btnCut === "X" || btnCut === "-" || btnCut === "+"
                               ? signClickHandler(e,calc,setCalc)
                               : btnCut === "."
                               ? commaClickHandler(e,calc,setCalc)
