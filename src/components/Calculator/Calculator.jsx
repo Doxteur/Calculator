@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Button from "./Button.jsx";
 
 function Calculator() {
@@ -16,12 +16,17 @@ function Calculator() {
     [0, ".", "="],
   ];
 
+
   const inputDigit = (digit) => {
     if (waitingForSecondOperand) {
       setDisplayValue(digit);
       setWaitingForSecondOperand(false);
     } else {
-      setDisplayValue(displayValue === "0" ? digit : displayValue + digit);
+      if (displayValue === "0" || !/\d/.test(displayValue)) {
+        setDisplayValue(digit);
+      } else {
+        setDisplayValue((prevDisplayValue) => prevDisplayValue * 10 + parseInt(digit));
+      }
     }
   };
 
@@ -85,7 +90,7 @@ function Calculator() {
         return secondOperand;
     }
   };
-  
+
   const exportToCSV = () => {
     const csvContent = "data:text/csv;charset=utf-8," + history.join("\n");
     const encodedURI = encodeURI(csvContent);
