@@ -24,16 +24,19 @@ export const commaClickHandler = (e,calc,setCalc) => {
 };
 
 export const signClickHandler = (e,calc,setCalc) => {
-    console.log("Equals")
   e.preventDefault();
   const value = e.target.innerHTML;
-console.log("Sign")
   setCalc({
     ...calc,
     sign: value,
     res: !calc.res && calc.num ? calc.num : calc.res,
     num: 0,
   });
+};
+
+//  CE
+export const revertCalculator = (calc,setCalc) => {
+   calc.res = calc.history[calc.history.length-1]
 };
 
 export const equalsClickHandler = (calc,setCalc) => {
